@@ -2,9 +2,108 @@ const navToggle = document.querySelector('.nav-toggle');
 const siteNav = document.querySelector('.site-nav');
 
 if (navToggle && siteNav) {
-  navToggle.addEventListener('click', () => {
+  const closeNav = () => {
+    siteNav.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  };
+
+  navToggle.addEventListener('click', (event) => {
+    event.stopPropagation();
     const isOpen = siteNav.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Close the menu after choosing a link, clicking away, or pressing Escape.
+  siteNav.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeNav);
+  });
+
+  document.addEventListener('click', (event) => {
+    if (
+      siteNav.classList.contains('open') &&
+      !siteNav.contains(event.target) &&
+      !navToggle.contains(event.target)
+    ) {
+      closeNav();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeNav();
+    }
+  });
+}
+
+// Accessibility: inject a skip-to-content link as the first focusable element.
+const mainContent = document.querySelector('main');
+if (mainContent && !document.querySelector('.skip-link')) {
+  if (!mainContent.id) {
+    mainContent.id = 'main-content';
+  }
+  const skipLink = document.createElement('a');
+  skipLink.className = 'skip-link';
+  skipLink.href = `#${mainContent.id}`;
+  skipLink.textContent = 'Skip to content';
+  document.body.prepend(skipLink);
+}
+
+// Add a subtle shadow to the sticky header once the page is scrolled.
+const siteHeader = document.querySelector('.site-header');
+if (siteHeader) {
+  const setHeaderState = () => {
+    siteHeader.classList.toggle('scrolled', window.scrollY > 8);
+  };
+  setHeaderState();
+  window.addEventListener('scroll', setHeaderState, { passive: true });
+}
+
+// Back-to-top button.
+const backToTop = document.createElement('button');
+backToTop.type = 'button';
+backToTop.className = 'back-to-top';
+backToTop.setAttribute('aria-label', 'Back to top');
+backToTop.innerHTML = '&uarr;';
+document.body.appendChild(backToTop);
+
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+window.addEventListener(
+  'scroll',
+  () => {
+    backToTop.classList.toggle('show', window.scrollY > 500);
+  },
+  { passive: true }
+);
+
+// Reveal sections as they enter the viewport (skipped for reduced-motion users).
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('main > section').forEach((section, index) => {
+    // Leave the first/hero section visible immediately to avoid an above-the-fold flash.
+    if (
+      index === 0 ||
+      section.classList.contains('hero') ||
+      section.classList.contains('page-hero')
+    ) {
+      return;
+    }
+    section.classList.add('reveal');
+    revealObserver.observe(section);
   });
 }
 
