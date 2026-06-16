@@ -741,6 +741,10 @@ textarea:focus {
   font-weight: 800;
 }
 
+.honeypot {
+  display: none;
+}
+
 .demo-points,
 .contact-details {
   display: grid;
