@@ -967,3 +967,219 @@ textarea:focus {
     padding-left: 14px;
   }
 }
+
+/* ----------------------------------------------------------------
+   UX enhancements: motion, focus, hover polish, helper components
+----------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Keep anchored sections clear of the sticky header */
+[id] {
+  scroll-margin-top: 92px;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Clear, consistent keyboard focus */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+.nav-toggle:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(23, 107, 74, 0.4);
+  outline-offset: 2px;
+}
+
+/* Skip-to-content link (injected for accessibility) */
+.skip-link {
+  position: fixed;
+  top: -120px;
+  left: 16px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--green);
+  font-weight: 800;
+  box-shadow: var(--shadow);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* Smooth transitions on interactive elements */
+.button,
+.site-nav a,
+.nav-toggle,
+.feature-matrix a,
+.card,
+.mini-card,
+.use-card,
+.detail-card,
+.price-card,
+.resource-grid article,
+.timeline li,
+.footer-links a,
+.brand-mark,
+details {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.brand:hover .brand-mark {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+/* Card lift on hover */
+.card:hover,
+.mini-card:hover,
+.use-card:hover,
+.detail-card:hover,
+.resource-grid article:hover {
+  transform: translateY(-4px);
+  border-color: #c2d6c8;
+  box-shadow: 0 22px 48px rgba(22, 38, 30, 0.12);
+}
+
+.price-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 56px rgba(23, 107, 74, 0.14);
+}
+
+/* Feature shortcuts: align text and reveal an arrow on hover */
+.feature-matrix a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.feature-matrix a::after {
+  content: "\2192";
+  color: var(--green);
+  font-weight: 800;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.feature-matrix a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(22, 38, 30, 0.08);
+}
+
+.feature-matrix a:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timeline li:hover {
+  border-color: var(--green);
+  transform: translateX(4px);
+}
+
+.footer-links a:hover {
+  transform: translateY(-1px);
+}
+
+/* Sticky header gains a soft shadow once the page is scrolled */
+.site-header.scrolled {
+  box-shadow: 0 10px 30px rgba(22, 38, 30, 0.08);
+}
+
+/* Supporting note under the pricing hero */
+.hero-note {
+  max-width: 680px;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+/* On-scroll reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Back-to-top button (injected) */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--green);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s ease,
+    background-color 0.2s ease;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.back-to-top:hover {
+  background: var(--green-dark);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .back-to-top {
+    right: 14px;
+    bottom: 14px;
+  }
+}
