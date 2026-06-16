@@ -13,6 +13,7 @@ document.querySelectorAll('.js-form').forEach((form) => {
     event.preventDefault();
     const status = form.querySelector('.form-status');
     const button = form.querySelector('button[type="submit"]');
+    const successMessage = 'Thank you for your message, we will be in touch with you shortly.';
 
     if (status) {
       status.textContent = 'Sending your message...';
@@ -39,11 +40,19 @@ document.querySelectorAll('.js-form').forEach((form) => {
       }
 
       if (status) {
-        status.textContent = result.message || 'Thank you for your message, we will be in touch with you shortly.';
+        status.textContent = successMessage;
       }
 
       form.reset();
     } catch (error) {
+      if (form.action.includes('formsubmit.co')) {
+        if (status) {
+          status.textContent = 'Sending through secure email service...';
+        }
+        HTMLFormElement.prototype.submit.call(form);
+        return;
+      }
+
       if (status) {
         status.textContent = error.message || 'The message could not be sent. Please email Info@florantops.com directly.';
       }

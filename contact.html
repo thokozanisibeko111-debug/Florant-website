@@ -31,7 +31,11 @@
           <p><strong>Business hours:</strong> Monday to Friday, 08:00 - 17:00</p>
         </div>
       </div>
-      <form class="form-card js-form" action="/api/forms/contact" method="post">
+      <form class="form-card js-form" action="https://formsubmit.co/ajax/Info@florantops.com" method="post">
+        <input type="hidden" name="_subject" value="New Florantops contact message">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://www.florantops.com/thank-you">
         <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
         <label>Name<input type="text" name="name" required></label>
         <label>Email<input type="email" name="email" required></label>
