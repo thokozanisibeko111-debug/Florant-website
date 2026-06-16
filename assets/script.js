@@ -13,7 +13,7 @@ document.querySelectorAll('.js-form').forEach((form) => {
     event.preventDefault();
     const status = form.querySelector('.form-status');
     if (status) {
-      status.textContent = 'Thank you. Your details are ready to be connected to email or CRM handling.';
+      status.textContent = 'Thank you for your message, we will be in touch with you shortly.';
     }
     form.reset();
   });
