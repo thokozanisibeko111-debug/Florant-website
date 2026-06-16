@@ -645,6 +645,13 @@ h3 {
   font-weight: 700;
 }
 
+.annual-price {
+  color: var(--green-dark);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin-top: -8px;
+}
+
 .price-card.featured {
   border-color: var(--green);
   box-shadow: 0 24px 60px rgba(23, 107, 74, 0.16);
@@ -757,6 +764,26 @@ textarea:focus {
 
 .founder-note {
   max-width: 900px;
+}
+
+.legal-content {
+  max-width: 880px;
+  padding-top: 18px;
+}
+
+.legal-content h2 {
+  font-size: clamp(1.35rem, 2.3vw, 2rem);
+  line-height: 1.18;
+  margin: 34px 0 10px;
+}
+
+.legal-content p {
+  color: var(--muted);
+}
+
+.legal-content a {
+  color: var(--green-dark);
+  font-weight: 800;
 }
 
 .site-footer {
