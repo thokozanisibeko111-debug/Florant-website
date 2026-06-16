@@ -631,6 +631,20 @@ h3 {
   gap: 16px;
 }
 
+.price {
+  color: var(--ink);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.price span {
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 .price-card.featured {
   border-color: var(--green);
   box-shadow: 0 24px 60px rgba(23, 107, 74, 0.16);
@@ -758,6 +772,12 @@ textarea:focus {
   max-width: 470px;
   color: var(--muted);
   margin: 14px 0 0;
+}
+
+.site-footer .footer-contact {
+  max-width: 620px;
+  color: #34423b;
+  font-weight: 700;
 }
 
 .footer-links {
