@@ -1,0 +1,16 @@
+name: Vercel Deploy Hook
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  trigger-vercel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel production deploy
+        if: ${{ secrets.VERCEL_DEPLOY_HOOK_URL != '' }}
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: curl -fsSL -X POST "$VERCEL_DEPLOY_HOOK_URL"
